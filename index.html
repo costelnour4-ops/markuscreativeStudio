@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markus Creative Studio | Premium Configurator & Studio</title>
+    <style>
+        /* --- Reset & Core Design System --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-main: #090a0f;
+            --bg-panel: #121620;
+            --bg-input: #1a1f2c;
+            --accent: #d4af37;
+            --accent-hover: #f3e0aa;
+            --text: #ffffff;
+            --text-muted: #8e95a5;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* --- Global Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: #23293a; border-radius: 3px; }
+
+        /* --- Header Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 40px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(9, 10, 15, 0.75);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 25px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav button.active, nav button:hover { color: var(--accent); }
+
+        /* --- SECTION 1: CINEMATIC HERO VIDEO INTRO --- */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(9, 10, 15, 0.3) 0%, rgba(9, 10, 15, 0.95) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 20px;
+            max-width: 850px;
+        }
+
+        .hero-subtitle {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(180deg, #ffffff 0%, #b2b7c2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            padding: 18px 36px;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 35px rgba(214, 175, 55, 0.35);
+            transform: translateY(-3px);
+        }
+
+        /* --- SECTION 2: MAIN CONFIGURATOR STUDIO --- */
+        .studio-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            min-height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+        /* --- Left Side: Photorealistic Stage --- */
+        .stage-area {
+            background: radial-gradient(circle at center, #181d29 0%, #06070a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 40px;
+            border-right: 1px solid var(--border);
+        }
+
+        .stage-badge {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        /* --- COIN REALISM ENGINE --- */
+        .coin-hardware {
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.8),
+                inset 0 2px 5px rgba(255,255,255,0.4),
+                inset 0 -5px 15px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Coin Border Styles */
+        .border-reeded { border: 12px dashed rgba(0,0,0,0.25); background-origin: border-box; }
+        .border-diamond { border: 14px double rgba(255,255,255,0.15); }
+        .border-plain { border: 10px solid rgba(0,0,0,0.15); }
+
+        .coin-core {
+            width: 98%;
+            height: 98%;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        /* Base Metal Shaders */
+        .metal-gold-shiny { background: conic-gradient(from 45deg, #f9e3aa, #d4af37, #a17a16, #f9e3aa, #d4af37, #a17a16, #f9e3aa); }
+        .metal-gold-antique { background: conic-gradient(from 0deg, #bfa054, #866b2d, #493a15, #bfa054, #866b2d, #493a15, #bfa054); }
+        .metal-silver-shiny { background: conic-gradient(from 45deg, #ffffff, #b8bec7, #7a818b, #ffffff, #b8bec7, #7a818b, #ffffff); }
+        .metal-silver-antique { background: conic-gradient(from 0deg, #9ea3ac, #686d75, #3b3e44, #9ea3ac, #686d75, #3b3e44, #9ea3ac); }
+        .metal-bronze-antique { background: conic-gradient(from 0deg, #cb8852, #945625, #522909, #cb8852, #945625, #522909, #cb8852); }
+
+        /* 3D Embossed Effect on Graphics */
+        .coin-center-graphic {
+            width: 130px;
+            height: 130px;
+            z-index: 5;
+            filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.6)) drop-shadow(-1px -1px 1px rgba(255,255,255,0.25));
+        }
+
+        .coin-svg-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 4;
+        }
+
+        .coin-svg-text text {
+            font-weight: 800;
+            font-size: 11.5px;
+            letter-spacing: 3.5px;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.2), -1px -1px 2px rgba(0,0,0,0.7);
+        }
+
+        /* --- PATCH REALISM ENGINE --- */
+        .patch-hardware {
+            width: 340px;
+            height: 340px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 30px;
+        }
+
+        /* High-density fabric overlay */
+        .patch-fabric-texture {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: inherit;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.12) 1px, transparent 1px);
+            background-size: 2px 2px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Merrowed / Overlock Embroidery Border */
+        .patch-border-heavy {
+            box-shadow: inset 0 0 0 8px cubic-bezier(0,0,0,0.5);
+            border: 7px double #1a1a1a;
+        }
+
+        .patch-center-graphic {
+            width: 110px;
+            height: 110px;
+            z-index: 3;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
+        }
+
+        .patch-text-line {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            z-index: 3;
+            text-transform: uppercase;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.6));
+            text-align: center;
+        }
+
+        /* --- Right Side: Dashboard & Controls --- */
+        .control-panel {
+            background-color: var(--bg-panel);
+            padding: 45px;
+            overflow-y: auto;
+            max-height: 100vh;
+            border-left: 1px solid var(--border);
+        }
+
+        .panel-header {
+            margin-bottom: 35px;
+        }
+
+        .panel-header h1 {
+            font-size: 1.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .panel-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Setup Steps / Tabs Layout */
+        .control-section {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .section-step-title {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-step-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .input-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper:last-child { margin-bottom: 0; }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(214, 175, 55, 0.1);
+        }
+
+        /* Premium Double Color Picker Row */
+        .color-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .color-tile-input {
+            display: flex;
+            align-items: center;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .color-tile-input input[type="color"] {
+            border: none;
+            background: transparent;
+            width: 35px;
+            height: 32px;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+
+        .color-tile-input span {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Checkout / Action Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(214, 175, 55, 0.15);
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 15px 25px rgba(214, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- Font Engine Injectors --- */
+        .font-stencil { font-family: 'Courier New', Courier, monospace; font-weight: 900; }
+        .font-tactical { font-family: 'Impact', Arial Black, sans-serif; letter-spacing: 2px; }
+        .font-classic { font-family: 'Georgia', serif; font-style: italic; }
+
+        @media (max-width: 1100px) {
+            .studio-container { grid-template-columns: 1fr; }
+            .stage-area { min-height: 450px; }
+            .control-panel { max-height: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="switchStudio('coin')">Markus Creative <span>Studio</span></div>
+        <nav>
+            <button id="nav-coin" class="active" onclick="switchStudio('coin'); scrollToStudio();">Challenge Coins</button>
+            <button id="nav-patch" onclick="switchStudio('patch'); scrollToStudio();">Patch-uri Tactice</button>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <span class="hero-subtitle">Măiestrie Militară & Design Premium</span>
+            <h1 class="hero-title">Făurește-ți Propriul Simbol</h1>
+            <p class="hero-description">
+                Configurare avansată în timp real pentru Monede de Colecție (Challenge Coins) și Patch-uri Tactice Brodate realizate la standarde militare riguroase.
+            </p>
+            <button class="hero-btn" onclick="scrollToStudio()">Intră în Configurator</button>
+        </div>
+    </section>
+
+    <div class="studio-container" id="studio-section">
+        
+        <section class="stage-area">
+            <div class="stage-badge" id="stage-tag">Modul: Monedă Militară</div>
+            
+            <div id="coin-render" class="coin-hardware metal-gold-shiny border-reeded">
+                <div class="coin-core">
+                    <svg id="coin-graphic" class="coin-center-graphic" viewBox="0 0 24 24">
+                        <path d="M12 2L9 7h6l-3-5zm-7 6l3 2-2 5 3-3 1 5 2-7-2-2H5zm14 0l-3 2 2 5-3-3-1 5-2-7 2-2h4zM12 9c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+
+                    <svg class="coin-svg-text" viewBox="0 0 300 300">
+                        <path id="textPathTop" d="M 35,150 A 115,115 0 1,1 265,150" fill="none" />
+                        <path id="textPathBottom" d="M 265,150 A 115,115 0 0,1 35,150" fill="none" />
+                        
+                        <text fill="rgba(45,35,10,0.85)" id="coin-svg-text-top">
+                            <textPath href="#textPathTop" startOffset="50%" text-anchor="middle">MARKUS GRAVIS STUDIO</textPath>
+                        </text>
+                        <text fill="rgba(45,35,10,0.85)" id="coin-svg-text-bottom">
+                            <textPath href="#textPathBottom" startOffset="50%" text-anchor="middle">• PREMIUM ENGRAVING •</textPath>
+                        </text>
+                    </svg>
+                </div>
+            </div>
+
+            <div id="patch-render" class="patch-hardware patch-border-heavy" style="display: none; background-color: #1b381b; border-color: #cca43b; border-radius: 50%;">
+                <div class="patch-fabric-texture"></div>
+                
+                <svg id="patch-graphic" class="patch-center-graphic" viewBox="0 0 24 24" style="fill: #cca43b;">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9zm-1 13v-3H9v-2h2V9h2v2h2v2h-2v3h-2z"/>
+                </svg>
+                
+                <div id="patch-text" class="patch-text-line font-tactical" style="color: #cca43b;">ȘCOALA BALOTEȘTI</div>
+            </div>
+
+        </section>
+
+        <main class="control-panel">
+            
+            <div id="coin-controls">
+                <div class="panel-header">
+                    <h1>Configurator Monede Metalice</h1>
+                    <p>Personalizați finisajul structural, textul periferic și profilele de tăiere 3D.</p>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 1: Metalurgie și Margini</div>
+                    <div class="input-wrapper">
+                        <label>Placare Metal & Finisaj</label>
+                        <select onchange="applyCoinMetal(this.value)">
+                            <option value="gold-shiny">Aur Imperial Lucios (Polizat)</option>
+                            <option value="gold-antique">Aur Mat Patinat (Stil Militar)</option>
+                            <option value="silver-shiny">Argint Pur Lucios (Platinat)</option>
+                            <option value="silver-antique">Argint Vechi Patinat (Antic)</option>
+                            <option value="bronze-antique">Bronz / Cupru Tactic Mat</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Profilul Marginii Exterioare</label>
+                        <select onchange="applyCoinEdge(this.value)">
+                            <option value="border-reeded">Margine Zimțată (Reeded Tactic)</option>
+                            <option value="border-diamond">Tăietură Diamant (Zirconiu Facetat)</option>
+                            <option value="border-plain">Margine Netedă Clasică</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 2: Heraldică Centrală</div>
+                    <div class="input-wrapper">
+                        <label>Simbol Central Matrițat</label>
+                        <select onchange="applyCoinInsignia(this.value)">
+                            <option value="acvila">Acvilă Heraldică (Stat Major)</option>
+                            <option value="baza90">Elice cu Aripi (Baza 90 Transport)</option>
+                            <option value="scut">Scut Tactic Operational</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 3: Inscripții Perimetrice</div>
+                    <div class="input-wrapper">
+                        <label>Text Arc Superior (Sus)</label>
+                        <input type="text" value="MARKUS GRAVIS STUDIO" maxlength="28" oninput="applyCoinTypography('top', this.value)">
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Text Arc Inferior (Jos)</label>
+                        <input type="text" value="PREMIUM ENGRAVING" maxlength="28" oninput="applyCoinTypography('bottom', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <div id="patch-controls" style="display: none;">
+                <div class="panel-header">
+                    <h1>Configurator Patch-uri Brodate</h1>
+                    <p>Controlați densitatea firelor, profilul suportului Velcro și elementele de identificare.</p>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 1: Geometrie și Format</div>
+                    <div class="input-wrapper">
+                        <label>Formă Tăiere Suport</label>
+                        <select onchange="applyPatchGeometry(this.value)">
+                            <option value="rotund">Rotund Standard (S.A.R. / Aviație)</option>
+                            <option value="scut">Scut Tradițional (Unități Active)</option>
+                            <option value="dreptunghi">Bandă de Nume Tactică</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 2: Paletă Fire și Cordon</div>
+                    <div class="color-grid">
+                        <div class="color-tile-input">
+                            <input type="color" value="#1b381b" onchange="applyPatchColors('bg', this.value)">
+                            <span>Pânză Fundal</span>
+                        </div>
+                        <div class="color-tile-input">
+                            <input type="color" value="#cca43b" onchange="applyPatchColors('thread', this.value)">
+                            <span>Fir Broderie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-step-title">Pasul 3: Broderie și Tipografie</div>
+                    <div class="input-wrapper">
+                        <label>Simbol Central Țesut</label>
+                        <select onchange="applyPatchInsignia(this.value)">
+                            <option value="carte">Emblemă Școlară (Carte & Copac)</option>
+                            <option value="grifon">Grifon Tactic (Baza 90)</option>
+                            <option value="salvare">Cruce Medicală / S.A.R.</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Text Principal Emblema</label>
+                        <input type="text" value="ȘCOALA BALOTEȘTI" maxlength="24" oninput="applyPatchTypography(this.value)">
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Stil Font Cusătură</label>
+                        <select onchange="applyPatchFont(this.value)">
+                            <option value="font-tactical">Military Block (Impact)</option>
+                            <option value="font-stencil">Tactical Stencil (Monospace)</option>
+                            <option value="font-classic">Clasic Academic (Serif)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="executeOrder()">Finalizează Design & Solicită Ofertă</button>
+
+        </main>
+    </div>
+
+    <script>
+        // --- SCROLL ANIMATION CORE ---
+        function scrollToStudio() {
+            document.getElementById('studio-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- CORE NAVIGATION ARCHITECTURE ---
+        function switchStudio(type) {
+            document.getElementById('coin-render').style.display = type === 'coin' ? 'flex' : 'none';
+            document.getElementById('coin-controls').style.display = type === 'coin' ? 'block' : 'none';
+            document.getElementById('patch-render').style.display = type === 'patch' ? 'flex' : 'none';
+            document.getElementById('patch-controls').style.display = type === 'patch' ? 'block' : 'none';
+            
+            document.getElementById('nav-coin').classList.toggle('active', type === 'coin');
+            document.getElementById('nav-patch').classList.toggle('active', type === 'patch');
+            document.getElementById('stage-tag').innerText = type === 'coin' ? 'Modul: Monedă Militară' : 'Modul: Patch Textil';
+        }
+
+        // --- METALLURGY AND COIN ENGINE LOGIC ---
+        let currentFillColor = "rgba(45,35,10,0.85)";
+
+        function applyCoinMetal(metallurgy) {
+            const coin = document.getElementById('coin-render');
+            const graphic = document.getElementById('coin-graphic');
+            const texts = document.querySelectorAll('.coin-svg-text text');
+            
+            coin.className = "coin-hardware " + coin.className.split(' ').filter(c => !c.startsWith('metal-')).join(' ');
+            coin.classList.add('metal-' + metallurgy);
+
+            if (metallurgy.includes('gold-shiny')) currentFillColor = "rgba(45, 30, 5, 0.85)";
+            if (metallurgy.includes('gold-antique')) currentFillColor = "rgba(31, 22, 4, 0.95)";
+            if (metallurgy.includes('silver')) currentFillColor = "rgba(15, 20, 28, 0.9)";
+            if (metallurgy.includes('bronze')) currentFillColor = "rgba(35, 12, 4, 0.95)";
+
+            graphic.style.fill = currentFillColor;
+            texts.forEach(t => t.style.fill = currentFillColor);
+        }
+
+        function applyCoinEdge(edgeStyle) {
+            const coin = document.getElementById('coin-render');
+            coin.className = "coin-hardware " + coin.className.split(' ').filter(c => !c.startsWith('border-')).join(' ');
+            coin.classList.add(edgeStyle);
+        }
+
+        function applyCoinInsignia(iconType) {
+            const graphic = document.getElementById('coin-graphic');
+            if (iconType === 'acvila') {
+                graphic.innerHTML = '<path d="M12 2L9 7h6l-3-5zm-7 6l3 2-2 5 3-3 1 5 2-7-2-2H5zm14 0l-3 2 2 5-3-3-1 5-2-7 2-2h4zM12 9c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>';
+            } else if (iconType === 'baza90') {
+                graphic.innerHTML = '<path d="M12 2a1 1 0 0 1 1 1v7.29a3 3 0 0 1 0 5.42V21a1 1 0 0 1-2 0v-5.29a3 3 0 0 1 0-5.42V3a1 1 0 0 1 1-1zm-4 10a2 2 0 1 0 4 0 2 2 0 0 0-4 0zm-5 1a1 1 0 0 1 0-2h3.29a3 3 0 0 1 5.42 0H21a1 1 0 0 1 0 2h-4.29a3 3 0 0 1-5.42 0H3z"/>';
+            } else if (iconType === 'scut') {
+                graphic.innerHTML = '<path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 16.91c-2.95-1-5.3-4.55-5.91-8.41H12v8.41z"/>';
+            }
+        }
+
+        function applyCoinTypography(zone, textVal) {
+            if (zone === 'top') {
+                document.querySelector('#coin-svg-text-top textPath').textContent = textVal.toUpperCase() || " ";
+            } else {
+                document.querySelector('#coin-svg-text-bottom textPath').textContent = textVal ? `• ${textVal.toUpperCase()} •` : " ";
+            }
+        }
+
+        // --- EMBROIDERY PATCH ENGINE LOGIC ---
+        function applyPatchGeometry(shape) {
+            const patch = document.getElementById('patch-render');
+            if (shape === 'rotund') {
+                patch.style.borderRadius = "50%";
+                patch.style.width = "340px"; patch.style.height = "340px";
+            } else if (shape === 'scut') {
+                patch.style.borderRadius = "10px 10px 150px 150px";
+                patch.style.width = "310px"; patch.style.height = "350px";
+            } else if (shape === 'dreptunghi') {
+                patch.style.borderRadius = "8px";
+                patch.style.width = "380px"; patch.style.height = "220px";
+            }
+        }
+
+        function applyPatchColors(layer, hexColor) {
+            if (layer === 'bg') {
+                document.getElementById('patch-render').style.backgroundColor = hexColor;
+            } else {
+                document.getElementById('patch-graphic').style.fill = hexColor;
+                document.getElementById('patch-render').style.borderColor = hexColor;
+                document.getElementById('patch-text').style.color = hexColor;
+            }
+        }
+
+        // --- EMBROIDERY INJECTORS ---
+        function applyPatchInsignia(insignia) {
+            const graphic = document.getElementById('patch-graphic');
+            if (insignia === 'carte') {
+                graphic.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9zm-1 13v-3H9v-2h2V9h2v2h2v2h-2v3h-2z"/>';
+            } else if (insignia === 'grifon') {
+                graphic.innerHTML = '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>';
+            } else if (insignia === 'salvare') {
+                graphic.innerHTML = '<path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/>';
+            }
+        }
+
+        function applyPatchTypography(val) {
+            document.getElementById('patch-text').innerText = val.toUpperCase() || " ";
+        }
+
+        function applyPatchFont(fontClass) {
+            const textElement = document.getElementById('patch-text');
+            textElement.className = "patch-text-line " + fontClass;
+        }
+
+        function executeOrder() {
+            alert("Schița vectorială a fost generată! Echipa Markus Gravis Studio vă va contacta prin email pentru aprobarea mostrei fizice.");
+        }
+    </script>
+</body>
+</html>
